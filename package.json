@@ -1,0 +1,11 @@
+{
+  "name": "movie_tracker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture:screenshot": "node scripts/capture-screenshot.mjs"
+  },
+  "devDependencies": {
+    "puppeteer": "^24.10.0"
+  }
+}

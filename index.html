@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="dark">
+  <title>Midnight Reel</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="hero">
+      <div>
+        <p class="eyebrow">Movie tracking dashboard</p>
+        <h1>Midnight Reel</h1>
+        <p class="hero-copy">
+          A clean CSV-driven library for tracking recommendations, ratings, and the people behind each pick.
+        </p>
+      </div>
+    </header>
+
+    <section class="stats" aria-label="Library summary">
+      <article class="stat-card">
+        <span class="stat-card__label">Movies</span>
+        <strong id="movieCount">0</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-card__label">Highest Rating</span>
+        <strong id="highestRating">0.0</strong>
+      </article>
+      <article class="stat-card">
+        <span class="stat-card__label">Top pick</span>
+        <strong id="topPick">-</strong>
+      </article>
+    </section>
+
+    <main class="panel" aria-label="Movie list">
+      <div class="table-wrap">
+        <table class="movie-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Year</th>
+              <th>Genre</th>
+              <th>Rating</th>
+              <th>Suggestors</th>
+            </tr>
+          </thead>
+          <tbody id="movieRows"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+
+  <script src="movies-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
