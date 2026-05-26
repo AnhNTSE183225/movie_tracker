@@ -14,6 +14,6 @@ Us,2019,Horror,3.4,Danh Phan
 Alien: Romulus,2024,Horror,2.9,Danh Phan|Long Nguyen
 Snow White,2025,Fantasy,1.6,Anh Nguyen
 Morbius,2022,Horror,0.0,Danh Phan
-Cù Lao Xác Sống,2022,Zombies,-8.0,Anh Nguyen
+Cù Lao Xác Sống,2022,Zombies,-8.0,Thao Dao
 Scary Movie,2000,Comedy?,???,Anh Nguyen
 `;
