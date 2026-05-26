@@ -5,12 +5,8 @@ on:
     branches:
       - main
     paths:
-      - "index.html"
-      - "app.js"
-      - "styles.css"
-      - "movies-data.js"
-      - "scripts/**"
-      - "package.json"
+      - "public/**"
+      - "ci/**"
   workflow_dispatch:
 
 permissions:
@@ -31,11 +27,14 @@ jobs:
         with:
           node-version: 20
           cache: npm
+          cache-dependency-path: ci/package-lock.json
 
       - name: Install dependencies
+        working-directory: ci
         run: npm ci
 
       - name: Capture screenshot
+        working-directory: ci
         run: npm run capture:screenshot
 
       - name: Publish release asset
@@ -44,7 +43,7 @@ jobs:
           tag_name: movie-tracker-screenshot-${{ github.run_id }}
           name: Movie Tracker Screenshot ${{ github.run_number }}
           body: Automated screenshot generated from run ${{ github.run_number }} (id ${{ github.run_id }}).
-          files: .out/movie-tracker.png
+          files: ci/.out/movie-tracker.png
           overwrite_files: false
           fail_on_unmatched_files: true
         env:

@@ -5,14 +5,16 @@ import { fileURLToPath } from "node:url";
 import puppeteer from "puppeteer";
 
 const scriptDir = path.dirname(fileURLToPath(import.meta.url));
-const repoRoot = path.resolve(scriptDir, "..");
+const ciRoot = path.resolve(scriptDir, "..");
+const repoRoot = path.resolve(ciRoot, "..");
+const publicRoot = path.join(repoRoot, "public");
 const port = 4173;
-const outputPath = path.join(repoRoot, ".out", "movie-tracker.png");
+const outputPath = path.join(ciRoot, ".out", "movie-tracker.png");
 
 const server = http.createServer(async (request, response) => {
   const requestUrl = new URL(request.url || "/", `http://127.0.0.1:${port}`);
   const pathname = requestUrl.pathname === "/" ? "/index.html" : requestUrl.pathname;
-  const filePath = path.join(repoRoot, pathname);
+  const filePath = path.join(publicRoot, pathname);
 
   try {
     const file = await readFile(filePath);
@@ -36,6 +38,8 @@ function getContentType(filePath) {
       return "text/csv; charset=utf-8";
     case ".png":
       return "image/png";
+    case ".svg":
+      return "image/svg+xml";
     default:
       return "application/octet-stream";
   }
