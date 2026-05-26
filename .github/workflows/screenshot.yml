@@ -14,6 +14,7 @@ permissions:
 
 jobs:
   screenshot:
+    if: false
     runs-on: ubuntu-latest
 
     steps:

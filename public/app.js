@@ -1,11 +1,36 @@
-const SUGGESTOR_DELIMITER = "|";
-const INLINE_MOVIE_CSV = window.MOVIE_CSV_TEXT || "";
-
 const movieRows = document.getElementById("movieRows");
 const movieCount = document.getElementById("movieCount");
 const highestRating = document.getElementById("highestRating");
 const topPick = document.getElementById("topPick");
+const titleFilterInput = document.getElementById("titleFilter");
+const yearFilterInput = document.getElementById("yearFilter");
+const genreFilterSelect = document.getElementById("genreFilter");
+const ratingFilterSelect = document.getElementById("ratingFilter");
+const suggestorFilterSelect = document.getElementById("suggestorFilter");
+const clearFiltersButton = document.getElementById("clearFilters");
+const filterSummary = document.getElementById("filterSummary");
+const sortHeaderButtons = Array.from(document.querySelectorAll(".sort-header"));
 let ratingIdSeed = 0;
+
+const MOVIE_DATA = window.MOVIE_DATA || { genres: {}, suggestors: {}, movies: [] };
+const SORTABLE_FIELDS = ["title", "year", "genre", "rating", "suggestors"];
+const SORT_FIELD_LABELS = {
+  title: "Title",
+  year: "Year",
+  genre: "Genre",
+  rating: "Rating",
+  suggestors: "Suggestors",
+};
+
+const state = {
+  title: "",
+  year: "",
+  genre: "all",
+  rating: "all",
+  suggestor: "all",
+  sortField: "rating",
+  sortDirection: "desc",
+};
 
 function escapeHtml(value) {
   return String(value)
@@ -16,75 +41,16 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-function parseCsv(text) {
-  const rows = [];
-  let row = [];
-  let cell = "";
-  let inQuotes = false;
-
-  for (let index = 0; index < text.length; index += 1) {
-    const character = text[index];
-    const nextCharacter = text[index + 1];
-
-    if (character === '"') {
-      if (inQuotes && nextCharacter === '"') {
-        cell += '"';
-        index += 1;
-      } else {
-        inQuotes = !inQuotes;
-      }
-      continue;
-    }
-
-    if (character === "," && !inQuotes) {
-      row.push(cell.trim());
-      cell = "";
-      continue;
-    }
-
-    if ((character === "\n" || character === "\r") && !inQuotes) {
-      if (character === "\r" && nextCharacter === "\n") {
-        index += 1;
-      }
-
-      row.push(cell.trim());
-      if (row.some((value) => value !== "")) {
-        rows.push(row);
-      }
-      row = [];
-      cell = "";
-      continue;
-    }
-
-    cell += character;
-  }
-
-  if (cell.length > 0 || row.length > 0) {
-    row.push(cell.trim());
-    if (row.some((value) => value !== "")) {
-      rows.push(row);
-    }
-  }
-
-  const [headerRow, ...dataRows] = rows;
-  const headers = headerRow.map((header) => header.trim());
-
-  return dataRows.map((fields) =>
-    headers.reduce((record, header, index) => {
-      record[header] = (fields[index] ?? "").trim();
-      return record;
-    }, {})
-  );
-}
-
-function parseSuggestors(rawSuggestors) {
-  return rawSuggestors
-    .split(SUGGESTOR_DELIMITER)
-    .map((name) => name.trim())
-    .filter(Boolean);
-}
-
 function parseRating(rawRating) {
+  if (rawRating === null || rawRating === undefined || rawRating === "") {
+    return {
+      kind: "unrated",
+      value: null,
+      sortValue: Number.NEGATIVE_INFINITY,
+      label: "Unrated",
+    };
+  }
+
   const numericRating = Number.parseFloat(rawRating);
 
   if (!Number.isFinite(numericRating)) {
@@ -92,6 +58,7 @@ function parseRating(rawRating) {
       kind: "unrated",
       value: null,
       sortValue: Number.NEGATIVE_INFINITY,
+      label: "Unrated",
     };
   }
 
@@ -99,7 +66,16 @@ function parseRating(rawRating) {
     kind: numericRating < 0 ? "negative" : "positive",
     value: numericRating,
     sortValue: numericRating,
+    label: `${numericRating.toFixed(1)}/10`,
   };
+}
+
+function getGenreLabel(genreKey) {
+  return MOVIE_DATA.genres[genreKey] ?? genreKey;
+}
+
+function getSuggestorLabel(suggestorKey) {
+  return MOVIE_DATA.suggestors[suggestorKey] ?? suggestorKey;
 }
 
 function buildStarPath(index) {
@@ -128,21 +104,144 @@ function createRatingStars(rating) {
   `;
 }
 
-async function loadMovies() {
-  if (!INLINE_MOVIE_CSV) {
+function normalizeMovie(movie, index) {
+  return {
+    id: `${movie.title}-${movie.year}-${index}`,
+    title: movie.title,
+    year: Number(movie.year),
+    genre: movie.genre,
+    genreLabel: getGenreLabel(movie.genre),
+    rating: parseRating(movie.rating),
+    suggestors: Array.isArray(movie.suggestors) ? movie.suggestors : [],
+    suggestorLabels: Array.isArray(movie.suggestors) ? movie.suggestors.map((suggestorKey) => getSuggestorLabel(suggestorKey)) : [],
+  };
+}
+
+function populateSelect(selectElement, values, includeAllLabel = "All") {
+  selectElement.innerHTML = "";
+
+  const allOption = document.createElement("option");
+  allOption.value = "all";
+  allOption.textContent = includeAllLabel;
+  selectElement.appendChild(allOption);
+
+  for (const value of values) {
+    const option = document.createElement("option");
+    if (typeof value === "string") {
+      option.value = value;
+      option.textContent = value;
+    } else {
+      option.value = value.value;
+      option.textContent = value.label;
+    }
+    selectElement.appendChild(option);
+  }
+}
+
+function compareValues(leftMovie, rightMovie, field) {
+  switch (field) {
+    case "title":
+      return leftMovie.title.localeCompare(rightMovie.title);
+    case "year":
+      return leftMovie.year - rightMovie.year;
+    case "genre":
+      return leftMovie.genreLabel.localeCompare(rightMovie.genreLabel);
+    case "rating":
+      return leftMovie.rating.sortValue - rightMovie.rating.sortValue;
+    case "suggestors":
+      return leftMovie.suggestorLabels.join(", ").localeCompare(rightMovie.suggestorLabels.join(", "));
+    default:
+      return 0;
+  }
+}
+
+function matchesFilters(movie) {
+  const titleQuery = state.title.trim().toLowerCase();
+  const yearQuery = state.year.trim();
+  const movieYear = String(movie.year);
+
+  if (titleQuery && !movie.title.toLowerCase().includes(titleQuery)) {
+    return false;
+  }
+
+  if (yearQuery && movieYear !== yearQuery) {
+    return false;
+  }
+
+  if (state.genre !== "all" && movie.genre !== state.genre) {
+    return false;
+  }
+
+  if (state.suggestor !== "all" && !movie.suggestors.includes(state.suggestor)) {
+    return false;
+  }
+
+  if (state.rating !== "all") {
+    const ratingValue = movie.rating.value;
+    if (state.rating === "unrated" && movie.rating.kind !== "unrated") {
+      return false;
+    }
+    if (state.rating === "rated" && movie.rating.kind === "unrated") {
+      return false;
+    }
+    if (state.rating === "positive" && movie.rating.kind !== "positive") {
+      return false;
+    }
+    if (state.rating === "negative" && movie.rating.kind !== "negative") {
+      return false;
+    }
+    if (state.rating === "zero" && ratingValue !== 0) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function updateFilterSummary(totalCount, visibleCount) {
+  const hiddenCount = totalCount - visibleCount;
+  const summaryParts = [
+    `${visibleCount} of ${totalCount} movies shown`,
+    `sorted by ${SORT_FIELD_LABELS[state.sortField]} ${state.sortDirection === "asc" ? "ascending" : "descending"}`,
+  ];
+
+  if (hiddenCount > 0) {
+    summaryParts.unshift(`${hiddenCount} hidden by filters`);
+  }
+
+  filterSummary.textContent = summaryParts.join(" • ");
+}
+
+function updateSortHeaderIndicators() {
+  for (const button of sortHeaderButtons) {
+    const field = button.dataset.sortField;
+    const arrow = button.querySelector(".sort-header__arrow");
+    const isActive = field === state.sortField;
+
+    button.classList.toggle("sort-header--active", isActive);
+    button.setAttribute("aria-sort", isActive ? (state.sortDirection === "asc" ? "ascending" : "descending") : "none");
+    if (arrow) {
+      arrow.textContent = isActive ? (state.sortDirection === "asc" ? "↑" : "↓") : "";
+    }
+  }
+}
+
+function setSort(field, direction = field === state.sortField ? (state.sortDirection === "asc" ? "desc" : "asc") : "desc") {
+  state.sortField = field;
+  state.sortDirection = direction;
+  updateSortHeaderIndicators();
+  renderMovies();
+}
+
+function renderMovies() {
+  if (!MOVIE_DATA.movies.length) {
     throw new Error("Missing movie data source: movies-data.js");
   }
 
-  const csvText = INLINE_MOVIE_CSV;
-  const movies = parseCsv(csvText)
-    .map((movie) => ({
-      title: movie.Title,
-      year: movie.Year,
-      genre: movie.Genre,
-      rating: parseRating(movie["Rating out of 10"]),
-      suggestors: parseSuggestors(movie.Suggestors),
-    }))
-    .sort((leftMovie, rightMovie) => rightMovie.rating.sortValue - leftMovie.rating.sortValue);
+  const movies = MOVIE_DATA.movies.map(normalizeMovie).filter(matchesFilters);
+  const directionFactor = state.sortDirection === "asc" ? 1 : -1;
+
+  movies.sort((leftMovie, rightMovie) => directionFactor * compareValues(leftMovie, rightMovie, state.sortField));
 
   movieRows.innerHTML = "";
 
@@ -164,7 +263,7 @@ async function loadMovies() {
     const genreCell = document.createElement("td");
     const genre = document.createElement("span");
     genre.className = "genre-pill";
-    genre.textContent = movie.genre;
+    genre.textContent = movie.genreLabel;
     genreCell.appendChild(genre);
 
     const ratingCell = document.createElement("td");
@@ -198,7 +297,7 @@ async function loadMovies() {
     const suggestorsCell = document.createElement("td");
     const suggestorsWrap = document.createElement("div");
     suggestorsWrap.className = "suggestors";
-    for (const name of movie.suggestors) {
+    for (const name of movie.suggestorLabels) {
       const pill = document.createElement("span");
       pill.className = "suggestor-pill";
       pill.textContent = name;
@@ -212,16 +311,111 @@ async function loadMovies() {
 
   const totalMovies = movies.length;
   const scoredMovies = movies.filter((movie) => Number.isFinite(movie.rating.value));
-  const highestScore = scoredMovies.length > 0 ? scoredMovies[0].rating.value : null;
-  const topRatedMovie = movies[0];
+  const highestScore = scoredMovies.length > 0 ? Math.max(...scoredMovies.map((movie) => movie.rating.value)) : null;
+  const topRatedMovie = movies[0] || null;
 
   movieCount.textContent = String(totalMovies);
   highestRating.textContent = highestScore === null ? "—" : highestScore.toFixed(1);
-  topPick.textContent = topRatedMovie.title;
+  topPick.textContent = topRatedMovie ? topRatedMovie.title : "-";
+  updateFilterSummary(MOVIE_DATA.movies.length, movies.length);
   document.body.dataset.moviesReady = "true";
 }
 
-loadMovies().catch((error) => {
+function syncStateFromControls() {
+  state.title = titleFilterInput.value;
+  state.year = yearFilterInput.value;
+  state.genre = genreFilterSelect.value;
+  state.rating = ratingFilterSelect.value;
+  state.suggestor = suggestorFilterSelect.value;
+}
+
+function bindControl(control, onChange) {
+  control.addEventListener("input", onChange);
+  control.addEventListener("change", onChange);
+}
+
+function resetFilters() {
+  titleFilterInput.value = "";
+  yearFilterInput.value = "";
+  genreFilterSelect.value = "all";
+  ratingFilterSelect.value = "all";
+  suggestorFilterSelect.value = "all";
+  syncStateFromControls();
+  state.sortField = "rating";
+  state.sortDirection = "desc";
+  updateSortHeaderIndicators();
+  renderMovies();
+}
+
+function initializeControls() {
+  populateSelect(
+    genreFilterSelect,
+    Object.entries(MOVIE_DATA.genres).map(([value, label]) => ({ value, label }))
+  );
+  populateSelect(
+    suggestorFilterSelect,
+    Object.entries(MOVIE_DATA.suggestors).map(([value, label]) => ({ value, label }))
+  );
+
+  ratingFilterSelect.innerHTML = "";
+  [
+    ["all", "All ratings"],
+    ["rated", "Rated only"],
+    ["unrated", "Unrated only"],
+    ["positive", "Positive ratings"],
+    ["negative", "Negative ratings"],
+    ["zero", "Exactly 0.0"],
+  ].forEach(([value, label]) => {
+    const option = document.createElement("option");
+    option.value = value;
+    option.textContent = label;
+    ratingFilterSelect.appendChild(option);
+  });
+  ratingFilterSelect.value = state.rating;
+
+  bindControl(titleFilterInput, () => {
+    syncStateFromControls();
+    renderMovies();
+  });
+  bindControl(yearFilterInput, () => {
+    syncStateFromControls();
+    renderMovies();
+  });
+  bindControl(genreFilterSelect, () => {
+    syncStateFromControls();
+    renderMovies();
+  });
+  bindControl(ratingFilterSelect, () => {
+    syncStateFromControls();
+    renderMovies();
+  });
+  bindControl(suggestorFilterSelect, () => {
+    syncStateFromControls();
+    renderMovies();
+  });
+
+  for (const button of sortHeaderButtons) {
+    button.addEventListener("click", () => {
+      const field = button.dataset.sortField;
+      if (field) {
+        setSort(field);
+      }
+    });
+  }
+
+  clearFiltersButton.addEventListener("click", resetFilters);
+}
+
+function boot() {
+  initializeControls();
+  syncStateFromControls();
+  updateSortHeaderIndicators();
+  renderMovies();
+}
+
+try {
+  boot();
+} catch (error) {
   movieRows.innerHTML = `
     <tr>
       <td colspan="5">
@@ -229,4 +423,4 @@ loadMovies().catch((error) => {
       </td>
     </tr>
   `;
-});
+}

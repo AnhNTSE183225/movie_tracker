@@ -6,7 +6,7 @@
   <meta name="color-scheme" content="dark">
   <meta name="theme-color" content="#06080d">
   <title>Movie tracking dashboard - Whisper</title>
-  <link rel="icon" href="media/favicon.jpg" type="image/svg+xml">
+  <link rel="icon" href="media/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -36,16 +36,50 @@
       </article>
     </section>
 
+    <section class="controls-panel" aria-label="Filters and sorting">
+      <div class="controls-panel__header">
+        <div>
+          <p class="controls-panel__eyebrow">Browse</p>
+          <h2>Filter and sort movies</h2>
+        </div>
+        <p class="controls-panel__summary" id="filterSummary"></p>
+      </div>
+
+      <div class="filters-grid">
+        <label class="field">
+          <span>Title</span>
+          <input id="titleFilter" type="search" placeholder="Search title">
+        </label>
+        <label class="field">
+          <span>Year</span>
+          <input id="yearFilter" type="number" min="1900" max="2100" placeholder="2024">
+        </label>
+        <label class="field">
+          <span>Genre</span>
+          <select id="genreFilter"></select>
+        </label>
+        <label class="field">
+          <span>Rating</span>
+          <select id="ratingFilter"></select>
+        </label>
+        <label class="field">
+          <span>Suggestor</span>
+          <select id="suggestorFilter"></select>
+        </label>
+        <button id="clearFilters" class="reset-button" type="button">Clear filters</button>
+      </div>
+    </section>
+
     <main class="panel" aria-label="Movie list">
       <div class="table-wrap">
         <table class="movie-table">
           <thead>
             <tr>
-              <th>Title</th>
-              <th>Year</th>
-              <th>Genre</th>
-              <th>Rating</th>
-              <th>Suggestors</th>
+              <th><button class="sort-header" type="button" data-sort-field="title" aria-label="Sort by title">Title <span class="sort-header__arrow" aria-hidden="true"></span></button></th>
+              <th><button class="sort-header" type="button" data-sort-field="year" aria-label="Sort by year">Year <span class="sort-header__arrow" aria-hidden="true"></span></button></th>
+              <th><button class="sort-header" type="button" data-sort-field="genre" aria-label="Sort by genre">Genre <span class="sort-header__arrow" aria-hidden="true"></span></button></th>
+              <th><button class="sort-header" type="button" data-sort-field="rating" aria-label="Sort by rating">Rating <span class="sort-header__arrow" aria-hidden="true"></span></button></th>
+              <th><button class="sort-header" type="button" data-sort-field="suggestors" aria-label="Sort by suggestors">Suggestors <span class="sort-header__arrow" aria-hidden="true"></span></button></th>
             </tr>
           </thead>
           <tbody id="movieRows"></tbody>
