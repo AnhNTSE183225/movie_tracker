@@ -3,7 +3,7 @@ const movieCount = document.getElementById("movieCount");
 const highestRating = document.getElementById("highestRating");
 const topPick = document.getElementById("topPick");
 const titleFilterInput = document.getElementById("titleFilter");
-const yearFilterInput = document.getElementById("yearFilter");
+const yearFilterSelect = document.getElementById("yearFilter");
 const genreFilterSelect = document.getElementById("genreFilter");
 const ratingFilterSelect = document.getElementById("ratingFilter");
 const suggestorFilterSelect = document.getElementById("suggestorFilter");
@@ -13,6 +13,7 @@ const sortHeaderButtons = Array.from(document.querySelectorAll(".sort-header"));
 let ratingIdSeed = 0;
 
 const MOVIE_DATA = window.MOVIE_DATA || { genres: {}, suggestors: {}, movies: [] };
+const MOVIE_THEME = window.MOVIE_THEME || { genreColors: {} };
 const SORTABLE_FIELDS = ["title", "year", "genre", "rating", "suggestors"];
 const SORT_FIELD_LABELS = {
   title: "Title",
@@ -74,27 +75,32 @@ function getGenreLabel(genreKey) {
   return MOVIE_DATA.genres[genreKey] ?? genreKey;
 }
 
+function getGenreColor(genreKey) {
+  return MOVIE_THEME.genreColors[genreKey] ?? "#9aa6b7";
+}
+
 function getSuggestorLabel(suggestorKey) {
   return MOVIE_DATA.suggestors[suggestorKey] ?? suggestorKey;
 }
 
-function buildStarPath(index) {
-  const offset = index * 24;
-  return `<g transform="translate(${offset} 0)"><path transform="translate(0 0) scale(0.8)" d="M15 1.5l3.53 7.15 7.89 1.15-5.71 5.56 1.35 7.85L15 19.53l-7.06 3.68 1.35-7.85-5.71-5.56 7.89-1.15L15 1.5z"></path></g>`;
+function buildTenStarPath(index) {
+  const offset = index * 16;
+  return `<g transform="translate(${offset} 0)"><path transform="translate(0 0) scale(0.55)" d="M15 1.5l3.53 7.15 7.89 1.15-5.71 5.56 1.35 7.85L15 19.53l-7.06 3.68 1.35-7.85-5.71-5.56 7.89-1.15L15 1.5z"></path></g>`;
 }
 
-function createRatingStars(rating) {
-  const fillWidth = Math.max(0, Math.min(120, (Math.abs(Number(rating)) / 10) * 120));
-  const starPaths = Array.from({ length: 5 }, (_, index) => buildStarPath(index)).join("");
+function createTenStarMeter(rating) {
+  const normalizedScore = Math.max(0, Math.min(10, Number(rating)));
+  const totalWidth = 160;
+  const fillWidth = (normalizedScore / 10) * totalWidth;
+  const starPaths = Array.from({ length: 10 }, (_, index) => buildTenStarPath(index)).join("");
   const clipId = `ratingClip-${ratingIdSeed += 1}`;
-  const negativeClass = Number(rating) < 0 ? " rating-stars--negative" : "";
 
   return `
-    <div class="rating-stars${negativeClass}" role="img" aria-label="${Number(rating).toFixed(1)} out of 10">
-      <svg viewBox="0 0 120 24" class="rating-stars__svg" aria-hidden="true" focusable="false">
+    <div class="rating-stars" role="img" aria-label="${normalizedScore.toFixed(1)} out of 10">
+      <svg viewBox="0 0 160 16" class="rating-stars__svg" aria-hidden="true" focusable="false">
         <defs>
           <clipPath id="${clipId}" clipPathUnits="userSpaceOnUse">
-            <rect x="0" y="0" width="${fillWidth}" height="24"></rect>
+            <rect x="0" y="0" width="${fillWidth}" height="16"></rect>
           </clipPath>
         </defs>
         <g class="rating-stars__base">${starPaths}</g>
@@ -111,6 +117,7 @@ function normalizeMovie(movie, index) {
     year: Number(movie.year),
     genre: movie.genre,
     genreLabel: getGenreLabel(movie.genre),
+    genreColor: getGenreColor(movie.genre),
     rating: parseRating(movie.rating),
     suggestors: Array.isArray(movie.suggestors) ? movie.suggestors : [],
     suggestorLabels: Array.isArray(movie.suggestors) ? movie.suggestors.map((suggestorKey) => getSuggestorLabel(suggestorKey)) : [],
@@ -157,14 +164,13 @@ function compareValues(leftMovie, rightMovie, field) {
 
 function matchesFilters(movie) {
   const titleQuery = state.title.trim().toLowerCase();
-  const yearQuery = state.year.trim();
   const movieYear = String(movie.year);
 
   if (titleQuery && !movie.title.toLowerCase().includes(titleQuery)) {
     return false;
   }
 
-  if (yearQuery && movieYear !== yearQuery) {
+  if (state.year !== "all" && movieYear !== state.year) {
     return false;
   }
 
@@ -219,9 +225,10 @@ function updateSortHeaderIndicators() {
     const isActive = field === state.sortField;
 
     button.classList.toggle("sort-header--active", isActive);
+    button.dataset.sortDirection = isActive ? state.sortDirection : "none";
     button.setAttribute("aria-sort", isActive ? (state.sortDirection === "asc" ? "ascending" : "descending") : "none");
     if (arrow) {
-      arrow.textContent = isActive ? (state.sortDirection === "asc" ? "↑" : "↓") : "";
+      arrow.textContent = isActive ? (state.sortDirection === "asc" ? "↑" : "↓") : "↕";
     }
   }
 }
@@ -264,6 +271,7 @@ function renderMovies() {
     const genre = document.createElement("span");
     genre.className = "genre-pill";
     genre.textContent = movie.genreLabel;
+    genre.style.setProperty("--genre-color", movie.genreColor);
     genreCell.appendChild(genre);
 
     const ratingCell = document.createElement("td");
@@ -280,7 +288,7 @@ function renderMovies() {
     } else {
       const ratingMeta = document.createElement("div");
       ratingMeta.className = "rating-meta";
-      ratingMeta.innerHTML = createRatingStars(movie.rating.value);
+      ratingMeta.innerHTML = createTenStarMeter(movie.rating.value);
 
       const ratingValue = document.createElement("span");
       ratingValue.className = "rating-value";
@@ -323,10 +331,25 @@ function renderMovies() {
 
 function syncStateFromControls() {
   state.title = titleFilterInput.value;
-  state.year = yearFilterInput.value;
+  state.year = yearFilterSelect.value;
   state.genre = genreFilterSelect.value;
   state.rating = ratingFilterSelect.value;
   state.suggestor = suggestorFilterSelect.value;
+  updateClearActionVisibility();
+}
+
+function hasActiveFilters() {
+  return Boolean(
+    state.title.trim()
+      || state.year !== "all"
+      || state.genre !== "all"
+      || state.rating !== "all"
+      || state.suggestor !== "all"
+  );
+}
+
+function updateClearActionVisibility() {
+  clearFiltersButton.hidden = !hasActiveFilters();
 }
 
 function bindControl(control, onChange) {
@@ -336,7 +359,7 @@ function bindControl(control, onChange) {
 
 function resetFilters() {
   titleFilterInput.value = "";
-  yearFilterInput.value = "";
+  yearFilterSelect.value = "all";
   genreFilterSelect.value = "all";
   ratingFilterSelect.value = "all";
   suggestorFilterSelect.value = "all";
@@ -348,6 +371,16 @@ function resetFilters() {
 }
 
 function initializeControls() {
+  const years = Array.from(
+    new Set((MOVIE_DATA.movies || []).map((movie) => String(movie.year)).filter(Boolean))
+  ).sort((left, right) => Number(right) - Number(left));
+
+  populateSelect(
+    yearFilterSelect,
+    years.map((value) => ({ value, label: value })),
+    "Year"
+  );
+
   populateSelect(
     genreFilterSelect,
     Object.entries(MOVIE_DATA.genres).map(([value, label]) => ({ value, label }))
@@ -377,7 +410,7 @@ function initializeControls() {
     syncStateFromControls();
     renderMovies();
   });
-  bindControl(yearFilterInput, () => {
+  bindControl(yearFilterSelect, () => {
     syncStateFromControls();
     renderMovies();
   });

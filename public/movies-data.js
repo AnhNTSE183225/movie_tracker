@@ -34,6 +34,18 @@ const SUGGESTOR_LABELS = {
     [SUGGESTOR_KEYS.THAO_DAO]: "Thao Dao",
 };
 
+window.MOVIE_THEME = {
+    genreColors: {
+        [GENRE_KEYS.ACTION]: "#8ab0ff",
+        [GENRE_KEYS.ANIMATED]: "#84d8c4",
+        [GENRE_KEYS.BRAINFUCK]: "#f6c453",
+        [GENRE_KEYS.COMEDY]: "#f08d70",
+        [GENRE_KEYS.FANTASY]: "#df8cff",
+        [GENRE_KEYS.HORROR]: "#5cc6ff",
+        [GENRE_KEYS.ZOMBIES]: "#a9d66f",
+    },
+};
+
 window.MOVIE_DATA = {
     genres: GENRE_LABELS,
     suggestors: SUGGESTOR_LABELS,
@@ -42,7 +54,7 @@ window.MOVIE_DATA = {
         { title: "Dungeons & Dragons: Honour Among Thieves", year: 2023, genre: GENRE_KEYS.FANTASY, rating: 9.0, suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN] },
         { title: "Kingsman: The Secret Service", year: 2014, genre: GENRE_KEYS.ACTION, rating: 8.8, suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN] },
         { title: "White Chicks", year: 2004, genre: GENRE_KEYS.COMEDY, rating: 8.3, suggestors: [SUGGESTOR_KEYS.NAM_PHAN] },
-        { title: "The Substance", year: 2024, genre: GENRE_KEYS.HORROR, rating: 8.0, suggestors: [] },
+        { title: "The Substance", year: 2024, genre: GENRE_KEYS.HORROR, rating: 8.0, suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN] },
         { title: "Goat", year: 2026, genre: GENRE_KEYS.ANIMATED, rating: 6.5, suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN] },
         { title: "Smile", year: 2022, genre: GENRE_KEYS.HORROR, rating: 5.5, suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN] },
         { title: "Smile 2", year: 2024, genre: GENRE_KEYS.HORROR, rating: 5.4, suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN] },
