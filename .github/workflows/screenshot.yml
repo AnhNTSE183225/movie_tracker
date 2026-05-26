@@ -41,11 +41,11 @@ jobs:
       - name: Publish release asset
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: movie-tracker-screenshot
-          name: Movie Tracker Screenshot
-          body: Automated screenshot generated from the latest CSV update.
+          tag_name: movie-tracker-screenshot-${{ github.run_id }}
+          name: Movie Tracker Screenshot ${{ github.run_number }}
+          body: Automated screenshot generated from run ${{ github.run_number }} (id ${{ github.run_id }}).
           files: .out/movie-tracker.png
-          overwrite_files: true
+          overwrite_files: false
           fail_on_unmatched_files: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
