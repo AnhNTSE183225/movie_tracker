@@ -128,9 +128,9 @@ function renderGenreTable(stats) {
     const row = document.createElement("tr");
 
     row.innerHTML = `
-      <td><span class="${rankChipClass(rank)}">${rank}</span></td>
-      <td>${item.label}</td>
-      <td><span class="metric-number">${item.count}</span></td>
+      <td data-label="Rank"><span class="${rankChipClass(rank)}">${rank}</span></td>
+      <td data-label="Category name">${item.label}</td>
+      <td data-label="Movies watched"><span class="metric-number">${item.count}</span></td>
     `;
 
     GENRE_ANALYTICS_ROWS.appendChild(row);
@@ -154,10 +154,10 @@ function renderSuggestorTable(stats) {
     const row = document.createElement("tr");
 
     row.innerHTML = `
-      <td><span class="${rankChipClass(rank)}">${rank}</span></td>
-      <td>${item.label}</td>
-      <td><span class="metric-number">${item.count}</span></td>
-      <td>
+      <td data-label="Rank"><span class="${rankChipClass(rank)}">${rank}</span></td>
+      <td data-label="Name">${item.label}</td>
+      <td data-label="Movies suggested"><span class="metric-number">${item.count}</span></td>
+      <td data-label="Average score">
         <div class="suggestor-score">
           ${hasAverageScore ? `
             <div class="rating-stars rating-stars--compact" role="img" aria-label="${averageLabel}">

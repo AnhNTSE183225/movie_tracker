@@ -256,18 +256,21 @@ function renderMovies() {
     const row = document.createElement("tr");
 
     const titleCell = document.createElement("td");
+    titleCell.dataset.label = "Title";
     const title = document.createElement("span");
     title.className = "movie-title";
     title.textContent = movie.title;
     titleCell.appendChild(title);
 
     const yearCell = document.createElement("td");
+    yearCell.dataset.label = "Year";
     const year = document.createElement("span");
     year.className = "year-pill";
     year.textContent = movie.year;
     yearCell.appendChild(year);
 
     const genreCell = document.createElement("td");
+    genreCell.dataset.label = "Genre";
     const genre = document.createElement("span");
     genre.className = "genre-pill";
     genre.textContent = movie.genreLabel;
@@ -275,6 +278,7 @@ function renderMovies() {
     genreCell.appendChild(genre);
 
     const ratingCell = document.createElement("td");
+    ratingCell.dataset.label = "Rating";
     const ratingBlock = document.createElement("div");
     ratingBlock.className = "rating-block";
 
@@ -303,6 +307,7 @@ function renderMovies() {
     ratingCell.appendChild(ratingBlock);
 
     const suggestorsCell = document.createElement("td");
+    suggestorsCell.dataset.label = "Suggestors";
     const suggestorsWrap = document.createElement("div");
     suggestorsWrap.className = "suggestors";
     for (const name of movie.suggestorLabels) {
