@@ -217,7 +217,7 @@ window.MOVIE_DATA = {
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: [
                 "2026-05-29",
-                "2026-05-30"
+                "2026-05-31"
             ],
             posterUrl: "./media/american-horror-stories-series-.jpg",
         },
