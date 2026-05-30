@@ -3,6 +3,7 @@ const TAB_PANELS = Array.from(document.querySelectorAll(".tab-content[data-tab-p
 const TAB_NAV = document.querySelector(".tab-nav");
 const TAB_INDICATOR = document.querySelector(".tab-nav__indicator");
 const DEFAULT_TAB = "library";
+const TAB_CHANGE_EVENT = "dashboard:tabchange";
 
 function getTabFromHash() {
   const hashValue = window.location.hash.replace(/^#/, "").trim();
@@ -23,6 +24,10 @@ function applyTab(tabName) {
     panel.hidden = !isActive;
     panel.style.viewTransitionName = isActive ? "tab-panel" : "none";
   }
+
+  window.dispatchEvent(new CustomEvent(TAB_CHANGE_EVENT, {
+    detail: { tabName },
+  }));
 }
 
 function updateTabIndicator(tabName) {

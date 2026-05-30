@@ -12,20 +12,20 @@
 <body>
   <div class="page-shell">
     <header class="hero">
-      <div>
-        <p class="eyebrow">Movie tracking dashboard</p>
-        <h1>Whisper</h1>
-        <p class="hero-copy">
-          Movie watching community in the Whisper Discord server.
-        </p>
+      <div class="hero__top">
+        <div class="hero__title-row">
+          <h1>Whisper</h1>
+          <p class="hero-copy hero-copy--inline">| Movie watching community in the Whisper Discord server.</p>
+        </div>
+
+        <nav class="tab-nav" aria-label="Dashboard sections">
+          <span class="tab-nav__indicator" aria-hidden="true"></span>
+          <button class="tab-nav__button tab-nav__button--active" type="button" data-tab-target="library" aria-selected="true">Library</button>
+          <button class="tab-nav__button" type="button" data-tab-target="schedule" aria-selected="false">Schedule</button>
+          <button class="tab-nav__button" type="button" data-tab-target="analytics" aria-selected="false">Analytics</button>
+        </nav>
       </div>
     </header>
-
-    <nav class="tab-nav" aria-label="Dashboard sections">
-      <span class="tab-nav__indicator" aria-hidden="true"></span>
-      <button class="tab-nav__button tab-nav__button--active" type="button" data-tab-target="library" aria-selected="true">Library</button>
-      <button class="tab-nav__button" type="button" data-tab-target="analytics" aria-selected="false">Analytics</button>
-    </nav>
 
     <section class="tab-content tab-content--active" data-tab-panel="library">
       <section class="stats" aria-label="Library summary">
@@ -139,11 +139,69 @@
         </article>
       </section>
     </section>
+
+    <section class="tab-content" data-tab-panel="schedule" hidden>
+      <section class="schedule-grid" aria-label="Movie schedule">
+        <article class="schedule-card schedule-calendar-card">
+          <div class="schedule-card__header">
+            <div>
+              <p class="controls-panel__eyebrow">Calendar</p>
+              <h2 id="scheduleMonthLabel">-</h2>
+            </div>
+            <div class="schedule-calendar__controls">
+              <button id="scheduleToday" class="schedule-nav-button schedule-nav-button--compact schedule-nav-button--today" type="button">Today</button>
+              <button id="schedulePreviousMonth" class="schedule-nav-button schedule-nav-button--compact schedule-nav-button--prev" type="button" aria-label="Previous month"></button>
+              <button id="scheduleNextMonth" class="schedule-nav-button schedule-nav-button--compact schedule-nav-button--next" type="button" aria-label="Next month"></button>
+            </div>
+          </div>
+
+          <div class="schedule-calendar__weekdays" aria-hidden="true">
+            <span>Sun</span>
+            <span>Mon</span>
+            <span>Tue</span>
+            <span>Wed</span>
+            <span>Thu</span>
+            <span>Fri</span>
+            <span>Sat</span>
+          </div>
+
+          <div id="scheduleCalendarGrid" class="schedule-calendar__grid" aria-label="Movie schedule calendar"></div>
+        </article>
+
+        <article class="schedule-card schedule-hero-card">
+          <div class="schedule-card__header">
+            <div>
+              <p class="controls-panel__eyebrow">Schedule</p>
+              <h2>Upcoming watch nights</h2>
+              <p class="controls-panel__hint">Pick a date from the calendar to update the lineup.</p>
+            </div>
+          </div>
+
+          <div class="schedule-hero__meta" aria-label="Selected schedule date">
+            <div>
+              <span class="schedule-meta__label">Date</span>
+              <strong id="scheduleHeroDate">-</strong>
+            </div>
+            <div>
+              <span class="schedule-meta__label">Day</span>
+              <strong id="scheduleHeroDay">-</strong>
+            </div>
+            <div>
+              <span class="schedule-meta__label">Movies</span>
+              <strong id="scheduleHeroCount">0</strong>
+            </div>
+          </div>
+
+          <div id="scheduleHeroMovies" class="schedule-hero__movies" aria-label="Scheduled movies for the selected day"></div>
+        </article>
+      </section>
+    </section>
   </div>
 
   <script src="movies-data.js"></script>
   <script src="app.js"></script>
   <script src="analytics.js"></script>
+  <script src="schedule.js"></script>
   <script src="tabs.js"></script>
 </body>
 </html>

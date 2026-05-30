@@ -228,7 +228,8 @@ function updateSortHeaderIndicators() {
     button.dataset.sortDirection = isActive ? state.sortDirection : "none";
     button.setAttribute("aria-sort", isActive ? (state.sortDirection === "asc" ? "ascending" : "descending") : "none");
     if (arrow) {
-      arrow.textContent = isActive ? (state.sortDirection === "asc" ? "↑" : "↓") : "↕";
+      arrow.dataset.direction = isActive ? state.sortDirection : "none";
+      arrow.textContent = "";
     }
   }
 }
