@@ -225,7 +225,7 @@ window.MOVIE_DATA = {
             title: "The Hitman's Bodyguard",
             year: 2017,
             genre: GENRE_KEYS.COMEDY,
-            rating: null,
+            rating: 8.0,
             suggestors: [SUGGESTOR_KEYS.LONG_NGUYEN],
             plannedDate: [
                 "2026-05-30"
