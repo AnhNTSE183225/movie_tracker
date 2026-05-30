@@ -111,6 +111,8 @@ function normalizeScheduleEntries(entries) {
           title: entry.title,
           posterUrl: entry.posterUrl,
           genre: entry.genre,
+          rating: parseRating(entry.rating),
+          suggestorLabels: Array.isArray(entry.suggestors) ? entry.suggestors.map(getSuggestorLabel) : [],
           sortIndex: index * 100 + plannedDateIndex,
         }));
     })
@@ -245,9 +247,17 @@ function renderHero() {
       <article class="schedule-item schedule-item--placeholder" aria-label="No movies planned for this date">
         <div class="schedule-item__poster schedule-item__poster--blank" aria-hidden="true"></div>
         <div class="schedule-item__body">
-          <p class="schedule-item__category">Open date</p>
+          <div class="schedule-item__pills">
+            <span class="schedule-item__category">Open date</span>
+          </div>
           <h3 class="schedule-item__title">No movies planned</h3>
           <p class="schedule-item__date">${formatDate(scheduleState.activeDate)}</p>
+          <div class="rating-block" aria-hidden="true" style="opacity: 0.35">
+            <div class="rating-meta">
+              ${createTenStarMeter(0).replace('rating-stars"', 'rating-stars rating-stars--compact"')}
+              <span class="rating-value rating-value--unrated" style="color: var(--muted-strong)">—/10</span>
+            </div>
+          </div>
         </div>
       </article>
     `;
@@ -259,13 +269,42 @@ function renderHero() {
       ? `<img class="schedule-item__poster" src="${entry.posterUrl}" alt="${escapeHtml(entry.title)} poster">`
       : `<div class="schedule-item__poster schedule-item__poster--blank" aria-hidden="true"></div>`;
 
+    const genreColor = getGenreColor(entry.genre);
+    
+    let ratingMarkup = '';
+    if (entry.rating.kind === "unrated") {
+      ratingMarkup = `
+        <div class="rating-block">
+          <div class="rating-meta">
+            ${createTenStarMeter(0).replace('rating-stars"', 'rating-stars rating-stars--compact"')}
+            <span class="rating-value rating-value--unrated" style="color: var(--muted-strong)">—/10</span>
+          </div>
+        </div>
+      `;
+    } else {
+      ratingMarkup = `
+        <div class="rating-block">
+          <div class="rating-meta">
+            ${createTenStarMeter(entry.rating.value).replace('rating-stars"', 'rating-stars rating-stars--compact"')}
+            <span class="rating-value${entry.rating.kind === "negative" ? " rating-value--negative" : ""}">${entry.rating.value.toFixed(1)}/10</span>
+          </div>
+        </div>
+      `;
+    }
+
+    const suggestorsMarkup = entry.suggestorLabels.map(s => `<span class="suggestor-pill">${escapeHtml(s)}</span>`).join('');
+
     return `
-      <article class="schedule-item">
+      <article class="schedule-item" style="border-color: color-mix(in srgb, ${genreColor} 30%, transparent)">
         ${posterMarkup}
         <div class="schedule-item__body">
-          <p class="schedule-item__category">${escapeHtml(getGenreLabel(entry.genre))}</p>
+          <div class="schedule-item__pills">
+            <span class="genre-pill" style="--genre-color: ${genreColor}">${escapeHtml(getGenreLabel(entry.genre))}</span>
+            ${suggestorsMarkup}
+          </div>
           <h3 class="schedule-item__title">${escapeHtml(entry.title)}</h3>
           <p class="schedule-item__date">${formatDate(scheduleState.activeDate)}</p>
+          ${ratingMarkup}
         </div>
       </article>
     `;

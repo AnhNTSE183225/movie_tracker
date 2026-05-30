@@ -1413,3 +1413,31 @@ h1 {
     animation-duration: 1ms;
   }
 }
+
+.schedule-item__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  height: 62px;
+  overflow: hidden;
+  align-items: flex-start;
+  align-content: flex-start;
+}
+
+.schedule-item__pills .genre-pill,
+.schedule-item__pills .suggestor-pill {
+  min-height: 28px;
+  padding: 4px 10px;
+  font-size: 0.78rem;
+  line-height: 1.2;
+}
+
+.schedule-item .rating-meta {
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.schedule-item .rating-value {
+  font-size: 0.82rem;
+}
+
