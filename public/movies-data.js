@@ -68,5 +68,6 @@ window.MOVIE_DATA = {
         { title: "Cù Lao Xác Sống", year: 2022, genre: GENRE_KEYS.ZOMBIES, rating: -8.0, suggestors: [SUGGESTOR_KEYS.THAO_DAO] },
         { title: "Scary Movie", year: 2000, genre: GENRE_KEYS.COMEDY, rating: null, suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN] },
         { title: "Kingsman: The Golden Circle", year: 2017, genre: GENRE_KEYS.ACTION, rating: 6.0, suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN] },
+        { title: "American Horror Stories (Series)", year: 2021, genre: GENRE_KEYS.HORROR, rating: null, suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN] },
     ],
 };
