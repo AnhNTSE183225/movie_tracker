@@ -57,7 +57,7 @@ window.MOVIE_DATA = {
             rating: 9.2,
             suggestors: [SUGGESTOR_KEYS.NAM_PHAN, SUGGESTOR_KEYS.LONG_NGUYEN],
             plannedDate: ["2026-05-22"],
-            posterUrl: "",
+            posterUrl: "./media/inception.jpg",
         },
         {
             title: "Dungeons & Dragons: Honour Among Thieves",
@@ -66,7 +66,7 @@ window.MOVIE_DATA = {
             rating: 9.0,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: ["2026-05-14"],
-            posterUrl: "",
+            posterUrl: "./media/dungeons-dragons-honour-among-thieves.jpg",
         },
         {
             title: "Kingsman: The Secret Service",
@@ -75,7 +75,7 @@ window.MOVIE_DATA = {
             rating: 8.8,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: ["2026-05-25"],
-            posterUrl: "",
+            posterUrl: "./media/kingsman-the-secret-service.jpg",
         },
         {
             title: "White Chicks",
@@ -84,7 +84,7 @@ window.MOVIE_DATA = {
             rating: 8.3,
             suggestors: [SUGGESTOR_KEYS.NAM_PHAN],
             plannedDate: ["2026-05-23"],
-            posterUrl: "",
+            posterUrl: "./media/white-chicks.jpg",
         },
         {
             title: "The Substance",
@@ -93,7 +93,7 @@ window.MOVIE_DATA = {
             rating: 8.0,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: ["2026-04-25"],
-            posterUrl: "",
+            posterUrl: "./media/the-substance.jpg",
         },
         {
             title: "Goat",
@@ -102,7 +102,7 @@ window.MOVIE_DATA = {
             rating: 6.5,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: ["2026-04-25"],
-            posterUrl: "",
+            posterUrl: "./media/goat.jpg",
         },
         {
             title: "Smile",
@@ -111,7 +111,7 @@ window.MOVIE_DATA = {
             rating: 5.5,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: ["2026-05-06"],
-            posterUrl: "",
+            posterUrl: "./media/smile.jpg",
         },
         {
             title: "Smile 2",
@@ -120,7 +120,7 @@ window.MOVIE_DATA = {
             rating: 5.4,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: ["2026-05-07"],
-            posterUrl: "",
+            posterUrl: "./media/smile-2.jpg",
         },
         {
             title: "Alien: Romulus",
@@ -129,7 +129,7 @@ window.MOVIE_DATA = {
             rating: 2.9,
             suggestors: [SUGGESTOR_KEYS.DANH_PHAN, SUGGESTOR_KEYS.LONG_NGUYEN],
             plannedDate: ["2026-05-11"],
-            posterUrl: "",
+            posterUrl: "./media/alien-romulus.jpg",
         },
         {
             title: "Snow White",
@@ -138,7 +138,7 @@ window.MOVIE_DATA = {
             rating: 1.6,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: ["2026-05-12"],
-            posterUrl: "",
+            posterUrl: "./media/snow-white.jpg",
         },
         {
             title: "Us",
@@ -147,7 +147,7 @@ window.MOVIE_DATA = {
             rating: 3.4,
             suggestors: [SUGGESTOR_KEYS.DANH_PHAN],
             plannedDate: ["2026-05-16"],
-            posterUrl: "",
+            posterUrl: "./media/us.jpg",
         },
         {
             title: "Scary Movie",
@@ -156,7 +156,7 @@ window.MOVIE_DATA = {
             rating: null,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: ["2026-05-19"],
-            posterUrl: "",
+            posterUrl: "./media/scary-movie.jpg",
         },
         {
             title: "28 Days Later",
@@ -165,7 +165,7 @@ window.MOVIE_DATA = {
             rating: 4.0,
             suggestors: [SUGGESTOR_KEYS.LONG_NGUYEN],
             plannedDate: ["2026-05-02"],
-            posterUrl: "",
+            posterUrl: "./media/28-days-later.jpg",
         },
         {
             title: "28 Weeks Later",
@@ -174,7 +174,7 @@ window.MOVIE_DATA = {
             rating: 3.0,
             suggestors: [SUGGESTOR_KEYS.LONG_NGUYEN],
             plannedDate: ["2026-05-24"],
-            posterUrl: "",
+            posterUrl: "./media/28-weeks-later.jpg",
         },
         {
             title: "Hoppers",
@@ -183,7 +183,7 @@ window.MOVIE_DATA = {
             rating: 3.6,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: ["2026-04-19"],
-            posterUrl: "",
+            posterUrl: "./media/hoppers.jpg",
         },
         {
             title: "Morbius",
@@ -192,7 +192,7 @@ window.MOVIE_DATA = {
             rating: 0.0,
             suggestors: [SUGGESTOR_KEYS.DANH_PHAN],
             plannedDate: [],
-            posterUrl: "",
+            posterUrl: "./media/morbius.jpg",
         },
         {
             title: "Cù Lao Xác Sống",
@@ -201,7 +201,7 @@ window.MOVIE_DATA = {
             rating: -8.0,
             suggestors: [SUGGESTOR_KEYS.THAO_DAO],
             plannedDate: ["2026-05-07"],
-            posterUrl: "",
+            posterUrl: "./media/c-lao-x-c-s-ng.jpg",
         },
         {
             title: "Kingsman: The Golden Circle",
@@ -210,7 +210,7 @@ window.MOVIE_DATA = {
             rating: 6.0,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: ["2026-05-26"],
-            posterUrl: "",
+            posterUrl: "./media/kingsman-the-golden-circle.jpg",
         },
         {
             title: "American Horror Stories (Series)",
@@ -222,7 +222,7 @@ window.MOVIE_DATA = {
                 "2026-05-29",
                 "2026-05-30"
             ],
-            posterUrl: "",
+            posterUrl: "./media/american-horror-stories-series-.jpg",
         },
     ],
 };
