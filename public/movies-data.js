@@ -1,7 +1,6 @@
 const GENRE_KEYS = {
     ACTION: "action",
     ANIMATED: "animated",
-    BRAINFUCK: "brainfuck",
     COMEDY: "comedy",
     FANTASY: "fantasy",
     HORROR: "horror",
@@ -19,7 +18,6 @@ const SUGGESTOR_KEYS = {
 const GENRE_LABELS = {
     [GENRE_KEYS.ACTION]: "Action",
     [GENRE_KEYS.ANIMATED]: "Animated",
-    [GENRE_KEYS.BRAINFUCK]: "Brainfuck",
     [GENRE_KEYS.COMEDY]: "Comedy",
     [GENRE_KEYS.FANTASY]: "Fantasy",
     [GENRE_KEYS.HORROR]: "Horror",
@@ -38,7 +36,6 @@ window.MOVIE_THEME = {
     genreColors: {
         [GENRE_KEYS.ACTION]: "#8ab0ff",
         [GENRE_KEYS.ANIMATED]: "#84d8c4",
-        [GENRE_KEYS.BRAINFUCK]: "#f6c453",
         [GENRE_KEYS.COMEDY]: "#f08d70",
         [GENRE_KEYS.FANTASY]: "#df8cff",
         [GENRE_KEYS.HORROR]: "#5cc6ff",
@@ -53,7 +50,7 @@ window.MOVIE_DATA = {
         {
             title: "Inception",
             year: 2010,
-            genre: GENRE_KEYS.BRAINFUCK,
+            genre: GENRE_KEYS.ACTION,
             rating: 9.2,
             suggestors: [SUGGESTOR_KEYS.NAM_PHAN, SUGGESTOR_KEYS.LONG_NGUYEN],
             plannedDate: ["2026-05-22"],
@@ -223,6 +220,28 @@ window.MOVIE_DATA = {
                 "2026-05-30"
             ],
             posterUrl: "./media/american-horror-stories-series-.jpg",
+        },
+        {
+            title: "The Hitman's Bodyguard",
+            year: 2017,
+            genre: GENRE_KEYS.COMEDY,
+            rating: null,
+            suggestors: [SUGGESTOR_KEYS.LONG_NGUYEN],
+            plannedDate: [
+                "2026-05-30"
+            ],
+            posterUrl: "./media/the-hitman-bodyguard.jpg",
+        },
+        {
+            title: "Black Mirror (Series)",
+            year: 2011,
+            genre: GENRE_KEYS.HORROR,
+            rating: null,
+            suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
+            plannedDate: [
+                "2026-05-31"
+            ],
+            posterUrl: "./media/black-mirror.jpg",
         },
     ],
 };

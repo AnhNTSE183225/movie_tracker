@@ -251,7 +251,6 @@ function renderHero() {
             <span class="schedule-item__category">Open date</span>
           </div>
           <h3 class="schedule-item__title">No movies planned</h3>
-          <p class="schedule-item__date">${formatDate(scheduleState.activeDate)}</p>
           <div class="rating-block" aria-hidden="true" style="opacity: 0.35">
             <div class="rating-meta">
               ${createTenStarMeter(0).replace('rating-stars"', 'rating-stars rating-stars--compact"')}
@@ -303,7 +302,6 @@ function renderHero() {
             ${suggestorsMarkup}
           </div>
           <h3 class="schedule-item__title">${escapeHtml(entry.title)}</h3>
-          <p class="schedule-item__date">${formatDate(scheduleState.activeDate)}</p>
           ${ratingMarkup}
         </div>
       </article>
