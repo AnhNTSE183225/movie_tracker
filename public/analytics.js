@@ -47,12 +47,24 @@ function rankChipClass(rank) {
 }
 
 function normalizeMovies(movies) {
-  return movies.map((movie) => ({
-    title: movie.title,
-    genreKey: movie.genre,
-    rating: sanitizeRating(movie.rating),
-    suggestors: Array.isArray(movie.suggestors) ? movie.suggestors : [],
-  }));
+  return movies.map((movie) => {
+    let rating = movie.rating;
+    if (rating === null || rating === undefined) {
+      if (Array.isArray(movie.episodes) && movie.episodes.length > 0) {
+        const ratedEps = movie.episodes.filter(e => e.rating != null);
+        if (ratedEps.length > 0) {
+          rating = ratedEps.reduce((sum, e) => sum + e.rating, 0) / ratedEps.length;
+        }
+      }
+    }
+
+    return {
+      title: movie.title,
+      genreKey: movie.genre,
+      rating: sanitizeRating(rating),
+      suggestors: Array.isArray(movie.suggestors) ? movie.suggestors : [],
+    };
+  });
 }
 
 function buildGenreStats(movies, genresMap) {

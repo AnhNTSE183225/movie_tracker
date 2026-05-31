@@ -98,6 +98,18 @@ function getGenreLabel(genreKey) {
 function normalizeScheduleEntries(entries) {
   return entries
     .flatMap((entry, index) => {
+      if (Array.isArray(entry.episodes) && entry.episodes.length > 0) {
+        return entry.episodes.map((episode, episodeIndex) => ({
+          plannedDate: episode.plannedDate,
+          title: `${entry.title} - ${episode.title}`,
+          posterUrl: entry.posterUrl,
+          genre: entry.genre,
+          rating: parseRating(episode.rating),
+          suggestorLabels: Array.isArray(entry.suggestors) ? entry.suggestors.map(getSuggestorLabel) : [],
+          sortIndex: index * 100 + episodeIndex,
+        }));
+      }
+
       const plannedDates = Array.isArray(entry.plannedDate)
         ? entry.plannedDate
         : entry.plannedDate

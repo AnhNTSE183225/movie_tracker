@@ -111,6 +111,16 @@ function createTenStarMeter(rating) {
 }
 
 function normalizeMovie(movie, index) {
+  let rating = movie.rating;
+  if (rating === null || rating === undefined) {
+    if (Array.isArray(movie.episodes) && movie.episodes.length > 0) {
+      const ratedEps = movie.episodes.filter(e => e.rating != null);
+      if (ratedEps.length > 0) {
+        rating = ratedEps.reduce((sum, e) => sum + e.rating, 0) / ratedEps.length;
+      }
+    }
+  }
+
   return {
     id: `${movie.title}-${movie.year}-${index}`,
     title: movie.title,
@@ -118,7 +128,7 @@ function normalizeMovie(movie, index) {
     genre: movie.genre,
     genreLabel: getGenreLabel(movie.genre),
     genreColor: getGenreColor(movie.genre),
-    rating: parseRating(movie.rating),
+    rating: parseRating(rating),
     suggestors: Array.isArray(movie.suggestors) ? movie.suggestors : [],
     suggestorLabels: Array.isArray(movie.suggestors) ? movie.suggestors.map((suggestorKey) => getSuggestorLabel(suggestorKey)) : [],
   };

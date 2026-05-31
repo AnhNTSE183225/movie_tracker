@@ -210,14 +210,47 @@ window.MOVIE_DATA = {
             posterUrl: "./media/kingsman-the-golden-circle.jpg",
         },
         {
-            title: "American Horror Stories (Series)",
+            title: "American Horror Stories",
             year: 2021,
             genre: GENRE_KEYS.HORROR,
-            rating: null,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
-            plannedDate: [
-                "2026-05-29",
-                "2026-05-31"
+            rating: null,
+            episodes: [
+                {
+                    title: "S02E01: Dollhouse",
+                    plannedDate: "2026-05-29",
+                    rating: null
+                },
+                {
+                    title: "S02E02: Aura",
+                    plannedDate: "2026-05-29",
+                    rating: null
+                },
+                {
+                    title: "S02E04: Milkmaids",
+                    plannedDate: "2026-05-29",
+                    rating: null
+                },
+                {
+                    title: "S01E01: Rubber(wo)man Part One",
+                    plannedDate: "2026-05-31",
+                    rating: null
+                },
+                {
+                    title: "S01E02: Rubber(wo)man Part Two",
+                    plannedDate: "2026-06-01",
+                    rating: null
+                },
+                {
+                    title: "S01E03: Drive In",
+                    plannedDate: "2026-06-01",
+                    rating: null
+                },
+                {
+                    title: "S01E04: The Naughty List",
+                    plannedDate: "2026-06-02",
+                    rating: null
+                }
             ],
             posterUrl: "./media/american-horror-stories-series-.jpg",
         },
@@ -239,7 +272,6 @@ window.MOVIE_DATA = {
             rating: null,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: [
-                "2026-05-31"
             ],
             posterUrl: "./media/black-mirror.jpg",
         },
