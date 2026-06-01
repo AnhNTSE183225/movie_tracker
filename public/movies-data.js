@@ -243,7 +243,7 @@ window.MOVIE_DATA = {
                 },
                 {
                     title: "S01E03: Drive In",
-                    plannedDate: "2026-06-01",
+                    plannedDate: "2026-06-02",
                     rating: null
                 },
                 {
