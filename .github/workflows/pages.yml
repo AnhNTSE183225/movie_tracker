@@ -32,7 +32,10 @@ jobs:
         uses: actions/configure-pages@v6
 
       - name: Inject Firebase Config
-        run: echo "${{ secrets.FIREBASE_WEB_CONFIG }}" > public/firebase-config.json
+        run: |
+          cat << 'EOF' > public/firebase-config.json
+          ${{ secrets.FIREBASE_WEB_CONFIG }}
+          EOF
 
       - name: Cache Busting
         run: |
