@@ -32,6 +32,9 @@ const SUGGESTOR_LABELS = {
     [SUGGESTOR_KEYS.THAO_DAO]: "Thao Dao",
 };
 
+window.VOTING_SESSION_ID = "session-2";
+window.VOTING_DAYS = ["2026-05-29", "2026-05-31", "2026-06-01", "2026-06-02"];
+
 window.MOVIE_THEME = {
     genreColors: {
         [GENRE_KEYS.ACTION]: "#8ab0ff",

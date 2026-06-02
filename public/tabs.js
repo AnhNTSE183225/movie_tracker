@@ -44,7 +44,7 @@ function updateTabIndicator(tabName) {
   const buttonRect = activeButton.getBoundingClientRect();
   const navStyles = window.getComputedStyle(TAB_NAV);
   const leftInset = Number.parseFloat(navStyles.borderLeftWidth) + Number.parseFloat(navStyles.paddingLeft);
-  const leftOffset = buttonRect.left - navRect.left - leftInset;
+  const leftOffset = buttonRect.left - navRect.left - leftInset + TAB_NAV.scrollLeft;
 
   TAB_INDICATOR.style.width = `${buttonRect.width}px`;
   TAB_INDICATOR.style.transform = `translateX(${leftOffset}px)`;
