@@ -250,7 +250,7 @@ window.MOVIE_DATA = {
                     rating: null
                 },
                 {
-                    title: "S01E04: The Naughty List",
+                    title: "S01E05: Ba'al",
                     plannedDate: "2026-06-02",
                     rating: null
                 }
