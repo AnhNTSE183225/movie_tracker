@@ -32,8 +32,8 @@ const SUGGESTOR_LABELS = {
     [SUGGESTOR_KEYS.THAO_DAO]: "Thao Dao",
 };
 
-window.VOTING_SESSION_ID = "session-2";
-window.VOTING_DAYS = ["2026-05-29", "2026-05-31", "2026-06-01", "2026-06-02"];
+window.VOTING_SESSION_ID = "session-3";
+window.VOTING_DAYS = [];
 
 window.MOVIE_THEME = {
     genreColors: {
@@ -222,37 +222,37 @@ window.MOVIE_DATA = {
                 {
                     title: "S02E01: Dollhouse",
                     plannedDate: "2026-05-29",
-                    rating: null
+                    rating: 5.0
                 },
                 {
                     title: "S02E02: Aura",
                     plannedDate: "2026-05-29",
-                    rating: null
+                    rating: 7.5
                 },
                 {
                     title: "S02E04: Milkmaids",
                     plannedDate: "2026-05-29",
-                    rating: null
+                    rating: 5.5
                 },
                 {
                     title: "S01E01: Rubber(wo)man Part One",
                     plannedDate: "2026-05-31",
-                    rating: null
+                    rating: 3.3
                 },
                 {
                     title: "S01E02: Rubber(wo)man Part Two",
                     plannedDate: "2026-06-01",
-                    rating: null
+                    rating: 0.0
                 },
                 {
                     title: "S01E03: Drive In",
                     plannedDate: "2026-06-02",
-                    rating: null
+                    rating: -0.8
                 },
                 {
                     title: "S01E05: Ba'al",
                     plannedDate: "2026-06-02",
-                    rating: null
+                    rating: 5.6
                 }
             ],
             posterUrl: "./media/american-horror-stories-series-.jpg",
