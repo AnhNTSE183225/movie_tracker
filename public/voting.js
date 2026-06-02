@@ -33,8 +33,27 @@ document.addEventListener('DOMContentLoaded', async () => {
         nameInput.value = savedName;
     }
 
-    nameInput.addEventListener('change', (e) => {
+    const allVotes = {};
+
+    function updateAllHighlights() {
+        const userName = nameInput.value.trim();
+        document.querySelectorAll('.voting-item').forEach(article => {
+            const itemId = article.getAttribute('data-id');
+            const data = allVotes[itemId] || {};
+            const parent = article.querySelector('.voting-scores');
+            if (parent) {
+                parent.querySelectorAll('.vote-btn').forEach(b => b.classList.remove('vote-btn--selected'));
+                if (userName && data[userName] !== undefined) {
+                    const btn = parent.querySelector(`.vote-btn[data-score="${data[userName]}"]`);
+                    if (btn) btn.classList.add('vote-btn--selected');
+                }
+            }
+        });
+    }
+
+    nameInput.addEventListener('input', (e) => {
         localStorage.setItem('whisper_voter_name', e.target.value.trim());
+        updateAllHighlights();
     });
 
     // 1. Gather all voting items based on VOTING_DAYS
@@ -138,6 +157,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         itemRef.on('value', (snapshot) => {
             const data = snapshot.val();
+            allVotes[item.id] = data || {};
+            updateAllHighlights();
+
             if (!data) {
                 resultsEl.innerHTML = `<span class="controls-panel__hint">No votes yet.</span>`;
                 return;
