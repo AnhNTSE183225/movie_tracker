@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', async () => {
                     votingItems.push({
                         id: `m${mIdx}_e${eIdx}`,
                         title: `${movie.title}: ${ep.title}`,
-                        posterUrl: movie.posterUrl
+                        posterUrl: ep.posterUrl || movie.posterUrl
                     });
                 }
             });

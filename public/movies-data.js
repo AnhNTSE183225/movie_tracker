@@ -33,7 +33,7 @@ const SUGGESTOR_LABELS = {
 };
 
 window.VOTING_SESSION_ID = "session-3";
-window.VOTING_DAYS = [];
+window.VOTING_DAYS = ["2026-06-04"];
 
 window.MOVIE_THEME = {
     genreColors: {
@@ -274,7 +274,19 @@ window.MOVIE_DATA = {
             genre: GENRE_KEYS.HORROR,
             rating: null,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
-            plannedDate: [
+            episodes: [
+                {
+                    title: "S1.E2: Fifteen Million Merits",
+                    plannedDate: "2026-06-04",
+                    rating: null,
+                    posterUrl: "https://m.media-amazon.com/images/M/MV5BMzhiMGMwZDUtYzU1NS00YjQ4LWJkMWYtYmU5MjkyYThlNDliXkEyXkFqcGc@._V1_FMjpg_UX1080_.jpg"
+                },
+                {
+                    title: "S1.E3: The Entire History of You",
+                    plannedDate: "2026-06-04",
+                    rating: null,
+                    posterUrl: "https://m.media-amazon.com/images/M/MV5BYjhiODk5ZmUtOGUxMy00MDJkLWJkZDQtNDI3OGJlZDU1MDk1XkEyXkFqcGc@._V1_FMjpg_UX1080_.jpg"
+                },
             ],
             posterUrl: "./media/black-mirror.jpg",
         },

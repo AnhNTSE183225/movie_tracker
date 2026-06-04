@@ -102,7 +102,7 @@ function normalizeScheduleEntries(entries) {
         return entry.episodes.map((episode, episodeIndex) => ({
           plannedDate: episode.plannedDate,
           title: `${entry.title} - ${episode.title}`,
-          posterUrl: entry.posterUrl,
+          posterUrl: episode.posterUrl || entry.posterUrl,
           genre: entry.genre,
           rating: parseRating(episode.rating),
           suggestorLabels: Array.isArray(entry.suggestors) ? entry.suggestors.map(getSuggestorLabel) : [],
