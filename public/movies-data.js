@@ -5,6 +5,7 @@ const GENRE_KEYS = {
     FANTASY: "fantasy",
     HORROR: "horror",
     ZOMBIES: "zombies",
+    PSYCOLOGICAL: "psychological",
 };
 
 const SUGGESTOR_KEYS = {
@@ -22,6 +23,7 @@ const GENRE_LABELS = {
     [GENRE_KEYS.FANTASY]: "Fantasy",
     [GENRE_KEYS.HORROR]: "Horror",
     [GENRE_KEYS.ZOMBIES]: "Zombies",
+    [GENRE_KEYS.PSYCOLOGICAL]: "Psychological",
 };
 
 const SUGGESTOR_LABELS = {
@@ -271,7 +273,7 @@ window.MOVIE_DATA = {
         {
             title: "Black Mirror (Series)",
             year: 2011,
-            genre: GENRE_KEYS.HORROR,
+            genre: GENRE_KEYS.PSYCOLOGICAL,
             rating: null,
             suggestors: [SUGGESTOR_KEYS.NAM_PHAN],
             episodes: [
