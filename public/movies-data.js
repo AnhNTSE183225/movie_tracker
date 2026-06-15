@@ -35,7 +35,7 @@ const SUGGESTOR_LABELS = {
 };
 
 window.VOTING_SESSION_ID = "session-4";
-window.VOTING_DAYS = ["2026-06-15"];
+window.VOTING_DAYS = [];
 
 window.MOVIE_THEME = {
     genreColors: {
@@ -296,7 +296,7 @@ window.MOVIE_DATA = {
             title: "Final Destination",
             year: 2000,
             genre: GENRE_KEYS.HORROR,
-            rating: null,
+            rating: 7.0,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: [
                 "2026-06-15"
