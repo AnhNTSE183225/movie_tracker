@@ -34,8 +34,8 @@ const SUGGESTOR_LABELS = {
     [SUGGESTOR_KEYS.THAO_DAO]: "Thao Dao",
 };
 
-window.VOTING_SESSION_ID = "session-3";
-window.VOTING_DAYS = [];
+window.VOTING_SESSION_ID = "session-4";
+window.VOTING_DAYS = ["2026-06-15"];
 
 window.MOVIE_THEME = {
     genreColors: {
@@ -291,6 +291,17 @@ window.MOVIE_DATA = {
                 },
             ],
             posterUrl: "./media/black-mirror.jpg",
+        },
+        {
+            title: "Final Destination",
+            year: 2000,
+            genre: GENRE_KEYS.HORROR,
+            rating: null,
+            suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
+            plannedDate: [
+                "2026-06-15"
+            ],
+            posterUrl: "https://m.media-amazon.com/images/M/MV5BMjE1MjlmOWYtYzdjMS00OTgwLThjMDctZWU4N2FkZjgyNTJiXkEyXkFqcGc@._V1_.jpg",
         },
     ],
 };
