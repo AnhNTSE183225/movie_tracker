@@ -303,5 +303,16 @@ window.MOVIE_DATA = {
             ],
             posterUrl: "https://m.media-amazon.com/images/M/MV5BMjE1MjlmOWYtYzdjMS00OTgwLThjMDctZWU4N2FkZjgyNTJiXkEyXkFqcGc@._V1_.jpg",
         },
+        {
+            title: "Final Destination 2",
+            year: 2003,
+            genre: GENRE_KEYS.HORROR,
+            rating: 5.0,
+            suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
+            plannedDate: [
+                "2026-06-17"
+            ],
+            posterUrl: "https://m.media-amazon.com/images/M/MV5BMjExMTMyODAzN15BMl5BanBnXkFtZTYwNjc5NDQ3._V1_FMjpg_UX1000_.jpg",
+        },
     ],
 };
