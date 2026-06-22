@@ -326,5 +326,4 @@ window.MOVIE_DATA = {
             posterUrl: "https://m.media-amazon.com/images/M/MV5BMzI3NzE0MmEtYmFjZC00NTJhLWI4OWUtNGRmNDEwNGU3NzM0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
         },
     ],
-    ],
 };
