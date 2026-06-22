@@ -35,7 +35,7 @@ const SUGGESTOR_LABELS = {
 };
 
 window.VOTING_SESSION_ID = "session-5";
-window.VOTING_DAYS = ['2026-06-22'];
+window.VOTING_DAYS = [];
 
 window.MOVIE_THEME = {
     genreColors: {
@@ -318,7 +318,7 @@ window.MOVIE_DATA = {
             title: "Final Destination 3",
             year: 2006,
             genre: GENRE_KEYS.HORROR,
-            rating: null,
+            rating: 3.6,
             suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
             plannedDate: [
                 "2026-06-22"
