@@ -34,8 +34,8 @@ const SUGGESTOR_LABELS = {
     [SUGGESTOR_KEYS.THAO_DAO]: "Thao Dao",
 };
 
-window.VOTING_SESSION_ID = "session-4";
-window.VOTING_DAYS = [];
+window.VOTING_SESSION_ID = "session-5";
+window.VOTING_DAYS = ['2026-06-22'];
 
 window.MOVIE_THEME = {
     genreColors: {
@@ -314,5 +314,17 @@ window.MOVIE_DATA = {
             ],
             posterUrl: "https://m.media-amazon.com/images/M/MV5BMjExMTMyODAzN15BMl5BanBnXkFtZTYwNjc5NDQ3._V1_FMjpg_UX1000_.jpg",
         },
+        {
+            title: "Final Destination 3",
+            year: 2006,
+            genre: GENRE_KEYS.HORROR,
+            rating: null,
+            suggestors: [SUGGESTOR_KEYS.ANH_NGUYEN],
+            plannedDate: [
+                "2026-06-22"
+            ],
+            posterUrl: "https://m.media-amazon.com/images/M/MV5BMzI3NzE0MmEtYmFjZC00NTJhLWI4OWUtNGRmNDEwNGU3NzM0XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+        },
+    ],
     ],
 };
